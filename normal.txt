@@ -1,0 +1,221 @@
+//lookup
+var student_data = 
+    [
+        {
+            id: "1",
+            mentor_id:"100"
+            student_name: "kishore",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "2",
+            student_name: "Madhavan",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "3",
+            student_name: "Santhosh",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "4",
+            student_name: "Murali",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "5",
+            student_name: "Premkumar",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "6",
+            student_name: "Ramnath",
+            language: "tamil",
+            batch:"B42",
+
+        },
+    ]
+
+var mentor_data =[
+    {
+        id:"100",
+        mentor_name:"sureshbabu",
+        batch:"b42",
+    },
+     {
+        id:"101",
+        mentor_name:"Saimohan",
+        batch:"b42",
+    },
+     {
+        id:"102",
+        mentor_name:"Ragavkumar",
+        batch:"b42",
+    },
+     {
+        id:"103",
+        mentor_name:"Sidharth",
+        batch:"b42",
+    },
+]
+
+
+
+
+var mentor_data =[
+    {
+        id:"100",
+        mentor_name:"sureshbabu",
+        batch:"b42",
+        students:[{
+            id: "1",
+            student_name: "kishore",
+            language: "tamil",
+            batch:"B42",
+        },
+        
+         {
+            id: "2",
+            student_name: "Madhavan",
+            language: "tamil",
+            batch:"B42",
+
+        }]
+    },
+     {
+        id:"101",
+        mentor_name:"Saimohan",
+        batch:"b42",
+        students:[ {
+            id: "3",
+            student_name: "Santhosh",
+            language: "tamil",
+            batch:"B42",
+         },
+         {
+            id: "4",
+            student_name: "Murali",
+            language: "tamil",
+            batch:"B42",
+
+        }]
+    },
+     {
+        id:"102",
+        mentor_name:"Ragavkumar",
+        batch:"b42",
+        students:[{
+            id: "5",
+            student_name: "Premkumar",
+            language: "tamil",
+            batch:"B42",
+
+        },
+         {
+            id: "6",
+            student_name: "Ramnath",
+            language: "tamil",
+            batch:"B42",
+
+        }]
+    },
+     {
+        id:"103",
+        mentor_name:"Sidharth",
+        batch:"b42",
+    },
+]
+  
+
+   var student_data = [
+   {
+     id: "1",
+     student_name: "kishore",
+     language: "tamil",
+     batch: "B42",
+       assign_mentor_id:"100",
+   },
+   {
+     id: "2",
+     student_name: "Madhavan",
+     language: "tamil",
+     batch: "B42",
+       assign_mentor_id:"100",
+  },
+   {
+     id: "3",
+     student_name: "Santhosh",
+     language: "tamil",
+     batch: "B42",
+       assign_mentor_id:"100",  
+   },
+   {
+     id: "4",
+     student_name: "Murali",
+     language: "tamil",
+     batch: "B42",
+     assign_mentor_id:"101", 
+   },
+   {
+     id: "5",
+     student_name: "Premkumar",
+     language: "tamil",
+     batch: "B42",
+       assign_mentor_id:"101", 
+   },
+   {
+     id: "6",
+     student_name: "Ramnath",
+     language: "tamil",
+     batch: "B42",
+    assign_mentor_id:"101", 
+  },
+   ];
+// app.get("/studentdata", function (request, response) {
+//   response.send(student_data);
+// });
+
+
+// var mentor_data = [
+//   {
+//     id: "100",
+//     mentor_name: "sureshbabu",
+//     batch: "b42",
+//   },
+//   {
+//     id: "101",
+//     mentor_name: "Saimohan",
+//     batch: "b42",
+//   },
+//   {
+//     id: "102",
+//     mentor_name: "Ragavkumar",
+//     batch: "b42",
+//   },
+//   {
+//     id: "103",
+//     mentor_name: "Sidharth",
+//     batch: "b42",
+//   },
+// ];
+// app.get("/mentordata", function (request, response) {
+//   response.send(mentor_data);
+// });
+
+  app.get("/student-details",async function (request, response) {
+    const data = await client.db("b42wd2")
+    .collection("student")
+    .aggregate([{ $lookup: { from: "mentor", localField: "mentor_name", foreignField: "name", as: "assign mentor" } }])
+    .toArray();
+    response.send(data);
+})
