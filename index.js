@@ -12,11 +12,14 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 const MONGO_URL = process.env.MONGO_URL;
-
-const client = new MongoClient(MONGO_URL); // dial
-// Top level await
-await client.connect(); // call
-console.log("Mongo is connected !!!  ");
+console.log(MONGO_URL);
+const connect_db = async () => {
+  const client = new MongoClient(MONGO_URL); // dial
+  // Top level await
+  await client.connect(); // call
+  console.log("Mongo is connected !!!  ");
+};
+connect_db();
 
 var home =
   "Hello World, This is student and mentor Task, 1) For Student Data = /studentdata , 2) For Mentor Data = /mentordata  3) For Assign_Mentor = /assign-mentor  ";
@@ -86,5 +89,22 @@ app.get("/assign-mentor", async function (request, response) {
 });
 console.log(process.env);
 console.log(process.env.MONGO_URL);
+// app.get("/assign-mentor", async function (request, response) {
+//   const data = await client
+//     .db("mentor_student")
+//     .collection("data1")
+//     .aggregate([
+//       {
+//         $lookup: {
+//           from: "data1",
+//           localField: "assign_mentor_id",
+//           foreignField: "mentor_id",
+//           as: "mentor_name",
+//         },
+//       },
+//     ])
+//     .toArray();
+//   response.send(data);
+// });
 
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
